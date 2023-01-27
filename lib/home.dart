@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 
 class MyHome extends StatefulWidget {
-  const MyHome({super.key});
+  MyHome({super.key});
 
   @override
   State<MyHome> createState() => _MyHomeState();
 }
 
 class _MyHomeState extends State<MyHome> {
+
+  int index = 0;
+
+  List screens = const [
+    Center(
+      child: Text("Mail"),
+    ),
+    Center(
+      child: Text("Profile"),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,26 +33,27 @@ class _MyHomeState extends State<MyHome> {
   }
 
   _body() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(onPressed: () {}, child: const Text("Btn")),
-          FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.menu),
-          )
-        ],
-      ),
-    );
+    return screens[index];
   }
 
   _bottomBar() {
-    return NavigationBar(destinations: const [
-      NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-      NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
-      NavigationDestination(icon: Icon(Icons.mail), label: 'Mail'),
-      NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+    return NavigationBar(
+      onDestinationSelected: (value) {
+        setState(() {
+          index = value;
+        });
+      },
+      destinations: const [
+      NavigationDestination(
+        icon: Icon(Icons.mail_outline),
+        label: 'Mail',
+        selectedIcon: Icon(Icons.mail),
+      ),
+      NavigationDestination(
+        icon: Icon(Icons.person_2_outlined),
+        label: 'Profile',
+        selectedIcon: Icon(Icons.person_2),
+      ),
     ]);
   }
 }
